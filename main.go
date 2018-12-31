@@ -14,7 +14,13 @@ func main() {
 	//fmt.Println()
 	//checkBlock()
 	//subscribe()
+
+
 	checkAllBlock()
 
-	checkTxByBlockNo(963)
+	//checkTxByBlockNo(1936)
+
+	//readCSV2()
+
+	//txCSV()
 }

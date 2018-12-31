@@ -1,4 +1,4 @@
-package tmp
+package main
 
 import (
 	"bufio"
@@ -10,7 +10,7 @@ import (
 	"os"
 )
 
-type csvFile struct {
+type row struct {
 	CountryOrTerritory string `json:"country"`
 	ReportingYear string `json:"report year"`
 	Namespace string `json:"namespace"`
@@ -33,10 +33,15 @@ type csvFile struct {
 	EndTime string `json:"end time"`
 }
 
-func readCSV() {
+type CsvLine struct {
+	Column1 string
+	Column2 string
+}
+
+func readCSV() []byte {
 	csvFile, _ := os.Open("/home/shiun/Documents/Masterarbeit/Data/FinalForm.csv")
 	reader := csv.NewReader(bufio.NewReader(csvFile))
-	var csvs []csvFile
+	var rows []row
 	for {
 		line, error := reader.Read()
 		if error == io.EOF {
@@ -44,15 +49,61 @@ func readCSV() {
 		} else if error != nil {
 			log.Fatal(error)
 		}
-		csvs = append(csvs, csvFile{
-			Firstname: line[0],
-			Lastname:  line[1],
-			Address: &Address{
-				City:  line[2],
-				State: line[3],
-			},
+		fmt.Println(line)
+		/*
+		rows = append(rows, row{
+			CountryOrTerritory: line[0],
+			ReportingYear:  line[1],
+			Namespace:  line[2],
+			ZoneCode:  line[3],
+			ZoneId:  line[4],
+			GeographicalName:  line[5],
+			BeginTime:  line[6],
+			Website:  line[7],
+			AQDZoneType:  line[8],
+			Pollutant:  line[9],
+			envelope:  line[10],
+			ResidentPopulation:  line[11],
+			ResidentPopulationYear:  line[12],
+			Area:  line[13],
+			TimeExtensionExemption:  line[14],
+			CompetentAuthority:  line[15],
+			Telephone:  line[16],
+			Address:  line[17],
+			ProtectionTarget:  line[18],
+			EndTime:  line[19],
 		})
+		*/
+
 	}
-	peopleJson, _ := json.Marshal(people)
-	fmt.Println(string(peopleJson))
+	rowsJson, _ := json.Marshal(rows)
+	//fmt.Println(string(rowsJson))
+
+	return rowsJson
+}
+
+func readCSV2() {
+	//filename := "{{ ENTER FILE }}"
+
+	// Open CSV file
+	f, err := os.Open("/home/shiun/Documents/Masterarbeit/Data/FinalForm.csv")
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	// Read File into a Variable
+	lines, err := csv.NewReader(f).ReadAll()
+	if err != nil {
+		panic(err)
+	}
+
+	// Loop through lines & turn into object
+	for _, line := range lines {
+		data := CsvLine{
+			Column1: line[0],
+			Column2: line[1],
+		}
+		fmt.Println(data.Column1 + " " + data.Column2)
+	}
 }
