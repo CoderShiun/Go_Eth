@@ -4,19 +4,16 @@ import (
 	"context"
 	"fmt"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
-	"github.com/ethereum/go-ethereum/accounts/keystore"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
-	"io/ioutil"
 	"log"
 	"math/big"
 )
 
 func txETH() {
+	/*
 	//加载的私钥
 	// 获取私钥方式一，通过keystore文件
-
 	fromKeystore,err := ioutil.ReadFile("/home/shiun/Ethereum/Pri_Air00/keystore/UTC--2018-11-18T00-01-44.834373565Z--a58b752d895c8365cda6a5e43586ef4661f7a9c1")
 	if err != nil{
 		log.Fatal(err)
@@ -25,7 +22,7 @@ func txETH() {
 	privateKey := fromKey.PrivateKey
 	publicKey := privateKey.PublicKey
 	fromAddress := crypto.PubkeyToAddress(publicKey)
-
+	*/
 	/*
 	fmt.Println(fromKey)
 	fmt.Println(privateKey)
@@ -45,7 +42,9 @@ func txETH() {
 		log.Fatal("error casting public key to ECDSA")
 	}
 	fromAddress := crypto.PubkeyToAddress(*publicKeyECDSA)
-*/
+	*/
+
+	privateKey, _, fromAddress := getKeys()
 
 	//获得帐户的随机数(nonce)。 每笔交易都需要一个nonce。 根据定义，nonce是仅使用一次的数字。
 	// 如果是发送交易的新帐户，则该随机数将为“0”。来自帐户的每个新事务都必须具有前一个nonce增加1的nonce。

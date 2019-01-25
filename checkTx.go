@@ -75,3 +75,25 @@ func checkSingleTxByBlockHash() {
 	fmt.Println(tx.Hash().Hex()) // 0x5d49fcaa394c97ec8a9c3e7bd9e8388d420fb050a52083ca52ff24b3b65bc9c2
 	fmt.Println(isPending)
 }
+
+func checkTokenTx(contractAddress, address string) {
+	// check ERC20 transactions from/to a specified address
+	transfers, err := rinkbyClient.ERC20Transfers(&contractAddress, &address, nil, nil, 0, 0)
+	if err != nil {
+		log.Panic(err)
+	}
+
+	fmt.Println(transfers)
+}
+
+/*
+check if the tx is failed
+ */
+func checkTokenInternalTx(address string){
+	internalTx, err := rinkbyClient.InternalTxByAddress(address, nil,nil, 1, 100, true)
+	if err != nil {
+		log.Panic(err)
+	}
+
+	fmt.Println(internalTx)
+}

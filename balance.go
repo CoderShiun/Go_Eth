@@ -45,3 +45,12 @@ func getBalance() {
 	ethPendingValue := new(big.Float).Quo(fbalance, big.NewFloat(math.Pow10(18)))
 	fmt.Print("Pending balance is: ", ethPendingValue)
 }
+
+func getTokenBalance(contractAddress, holderAddress string) {
+	tokenBalance, err := rinkbyClient.TokenBalance(contractAddress, holderAddress)
+	if err != nil{
+		log.Panic(err)
+	}
+
+	fmt.Println(tokenBalance.Int())
+}
