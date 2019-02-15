@@ -2,10 +2,12 @@ package main
 
 import (
 	"crypto/ecdsa"
+	"github.com/ethereum/go-ethereum/accounts/keystore"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/nanmu42/etherscan-api"
+	"io/ioutil"
 	"log"
 )
 
@@ -24,6 +26,16 @@ func connectClient() *ethclient.Client {
 	}
 */
 	//fmt.Println("we have a connection")
+	_ = client //??
+	return client
+}
+
+func connectRinkbyClient() *ethclient.Client {
+	client, err := ethclient.Dial("https://rinkeby.infura.io")
+	if err != nil{
+		log.Fatal(err)
+	}
+
 	_ = client //??
 	return client
 }
@@ -54,19 +66,20 @@ func connectEthScan() *etherscan.Client {
 func getKeys() (*ecdsa.PrivateKey, *ecdsa.PublicKey, common.Address) {
 	//加载的私钥
 	// 获取私钥方式一，通过keystore文件
-	/*
-	fromKeystore,err := ioutil.ReadFile("/home/shiun/Ethereum/Pri_Air00/keystore/UTC--2018-11-18T00-01-44.834373565Z--a58b752d895c8365cda6a5e43586ef4661f7a9c1")
+
+	fromKeystore,err := ioutil.ReadFile("/home/shiun/.ethereum/rinkeby/keystore/UTC--2018-12-04T12-10-18.166247692Z--79e9ad2b2cdc815de93a02ec48c94f88a27fce86")
 	if err != nil{
 		log.Fatal(err)
 	}
-	fromKey, err := keystore.DecryptKey(fromKeystore,"air00")
+	fromKey, err := keystore.DecryptKey(fromKeystore,"MXCtest00")
 	if err != nil {
 		log.Fatal(err)
 	}
 	privateKey := fromKey.PrivateKey
 	publicKey := privateKey.PublicKey
 	fromAddress := crypto.PubkeyToAddress(publicKey)
-	*/
+
+	return privateKey, &publicKey, fromAddress
 	/*
 	fmt.Println(fromKey)
 	fmt.Println(privateKey)
@@ -74,8 +87,8 @@ func getKeys() (*ecdsa.PrivateKey, *ecdsa.PublicKey, common.Address) {
 	fmt.Println(fromAddress)*/
 
 	// 获取私钥方式二，通过私钥字符串
-
-	privateKey, err := crypto.HexToECDSA("dadfc620f1d227552f4696ebde9f79cef65e82a837090df957020163ae0b8257")
+/*
+	privateKey, err := crypto.HexToECDSA("")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -88,4 +101,5 @@ func getKeys() (*ecdsa.PrivateKey, *ecdsa.PublicKey, common.Address) {
 	fromAddress := crypto.PubkeyToAddress(*publicKeyECDSA)
 
 	return privateKey, publicKeyECDSA, fromAddress
+	*/
 }

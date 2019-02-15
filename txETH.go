@@ -8,22 +8,26 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"log"
 	"math/big"
+	"strconv"
 )
 
-func txETH(to string, amount float64) {
+func txETH(to, amount string) {
 	privateKey, _, fromAddress := getKeys()
 
 	//获得帐户的随机数(nonce)。 每笔交易都需要一个nonce。 根据定义，nonce是仅使用一次的数字。
 	// 如果是发送交易的新帐户，则该随机数将为“0”。来自帐户的每个新事务都必须具有前一个nonce增加1的nonce。
 	// 很难对所有nonce进行手动跟踪，于是ethereum客户端提供一个帮助方法PendingNonceAt，它将返回你应该使用的下一个nonce。
 	//该函数需要我们发送的帐户的公共地址 - 这个我们可以从私钥派生。
-	nonce, err := client.PendingNonceAt(context.Background(), fromAddress)
+	//nonce, err := client.PendingNonceAt(context.Background(), fromAddress)
+	nonce, err := rinkbyClient.PendingNonceAt(context.Background(), fromAddress)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	//设置我们将要转移的ETH数量。 但是我们必须将ETH转换为wei
-	calAmount := int64(amount*1000000000000000000)
+
+	amountF64, err := strconv.ParseFloat(amount,64)
+	calAmount := int64(amountF64*1000000000000000000)
 	txAmount := big.NewInt(calAmount)
 
 	//ETH转账的燃气应设上限为“21000”单位。
@@ -73,7 +77,8 @@ func txETH(to string, amount float64) {
 	}
 
 	//调用“SendTransaction”来将已签名的事务广播到整个网络
-	err = client.SendTransaction(context.Background(), signedTx)
+	//err = client.SendTransaction(context.Background(), signedTx)
+	err = rinkbyClient.SendTransaction(context.Background(), signedTx)
 	if err != nil {
 		log.Fatal(err)
 	}
