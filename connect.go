@@ -75,7 +75,7 @@ func getKeys() (*ecdsa.PrivateKey, *ecdsa.PublicKey, common.Address) {
 
 	// 获取私钥方式二，通过私钥字符串
 
-	privateKey, err := crypto.HexToECDSA("dadfc620f1d227552f4696ebde9f79cef65e82a837090df957020163ae0b8257")
+	privateKey, err := crypto.HexToECDSA("")
 	if err != nil {
 		log.Fatal(err)
 	}
