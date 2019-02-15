@@ -47,7 +47,8 @@ func getBalance() {
 }
 
 func getTokenBalance(contractAddress, holderAddress string) {
-	tokenBalance, err := rinkbyClient.TokenBalance(contractAddress, holderAddress)
+	tokenBalance, err := ethScan.TokenBalance(contractAddress, holderAddress)
+	//tokenBalance, err := client.TokenBalance(contractAddress, holderAddress)
 	if err != nil{
 		log.Panic(err)
 	}

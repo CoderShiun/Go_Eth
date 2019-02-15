@@ -12,14 +12,15 @@ import (
 	"math/big"
 )
 
-func txToken() {
+func txToken(from, to, amount string) {
 	//代币传输不需要传输ETH，因此将交易“值”设置为“0”。
 	value := big.NewInt(0)
 
 	//将要发送代币的地址存储在变量中。
-	toAddress := common.HexToAddress("0x5f36247e4f1e5160d6980c4828bafb57ae450d2d")
+	toAddress := common.HexToAddress(to)
 
-	tokenAddress := common.HexToAddress("")
+	//Contract address
+	tokenAddress := common.HexToAddress("0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e")
 
 	//函数名将是传递函数的名称，即ERC-20规范中的transfer和参数类型。 第一个参数类型是address（令牌的接收者），
 	// 第二个类型是uint256（要发送的代币数量）。 不需要没有空格和参数名称。 我们还需要用字节切片格式
@@ -35,12 +36,13 @@ func txToken() {
 	paddedAddress := common.LeftPadBytes(toAddress.Bytes(), 32)
 	fmt.Println(hexutil.Encode(paddedAddress))
 
-	//发送多少个代币，在这里是1,000个，并且我们需要在big.Int中格式化为wei
-	amount := new(big.Int)
-	amount.SetString("1000000000000000000000", 10) // 1000 tokens
+	//发送多少个代币，在这里是1个，并且我们需要在big.Int中格式化为wei (+18 zero)
+	txAmount := new(big.Int)
+	txAmount.SetString(amount + "000000000000000000", 10)
+
 
 	//代币量也需要左填充到32个字节
-	paddedAmount := common.LeftPadBytes(amount.Bytes(), 32)
+	paddedAmount := common.LeftPadBytes(txAmount.Bytes(), 32)
 	fmt.Println(hexutil.Encode(paddedAmount))
 
 	//将方法ID，填充后的地址和填后的转账量，接到将成为我们数据字段的字节片
