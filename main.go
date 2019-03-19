@@ -51,5 +51,7 @@ func main() {
 
 	//txETH("0x9f8CFcAb0f63A06c455C848Cc617912a35e8806E","0.12")
 
-	txToken("0x9f8CFcAb0f63A06c455C848Cc617912a35e8806E","121")
+	//txToken("0x9f8CFcAb0f63A06c455C848Cc617912a35e8806E","121")
+
+	getPriKeyFromKeystore()
 }
