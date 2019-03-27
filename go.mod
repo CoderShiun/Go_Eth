@@ -1,4 +1,4 @@
-module Pri_AirChain
+module Go_Eth
 
 require (
 	github.com/allegro/bigcache v1.1.0 // indirect
