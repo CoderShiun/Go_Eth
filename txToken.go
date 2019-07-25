@@ -21,7 +21,7 @@ func txToken(to, amount string) {
 	toAddress := common.HexToAddress(to)
 
 	//Contract address
-	tokenAddress := common.HexToAddress("0xD4b4AE9EB383F194fc7b8c428a4c47D36A6d2540")
+	tokenAddress := common.HexToAddress("0xd0B0e864959d4625577939fC4d45b77aeB04F1d0")
 
 	//函数名将是传递函数的名称，即ERC-20规范中的transfer和参数类型。 第一个参数类型是address（令牌的接收者），
 	// 第二个类型是uint256（要发送的代币数量）。 不需要没有空格和参数名称。 我们还需要用字节切片格式
@@ -56,7 +56,7 @@ func txToken(to, amount string) {
 	// 它可以为我们估算所需的燃气量。 这个函数从ethereum包中获取CallMsg结构，我们在其中指定数据和地址。
 	// 它将返回我们估算的完成交易所需的估计燃气上限
 
-	gasLimit, err := rinkbyClient.EstimateGas(context.Background(), ethereum.CallMsg{
+	gasLimit, err := ropstenClient.EstimateGas(context.Background(), ethereum.CallMsg{
 		To:   &toAddress,
 		Data: data,
 	})
@@ -65,14 +65,14 @@ func txToken(to, amount string) {
 	}
 	fmt.Println("gaslimit: ", gasLimit)
 
-	gasPrice, err := rinkbyClient.SuggestGasPrice(context.Background())
+	gasPrice, err := ropstenClient.SuggestGasPrice(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println("gasprice", gasPrice)
 
 	privateKey, _, fromAddress := getKeys()
-	nonce, err := rinkbyClient.PendingNonceAt(context.Background(), fromAddress)
+	nonce, err := ropstenClient.PendingNonceAt(context.Background(), fromAddress)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -83,7 +83,7 @@ func txToken(to, amount string) {
 	tx := types.NewTransaction(nonce, tokenAddress, value, 137005, gasPrice, data)
 
 	//使用发件人的私钥对事务进行签名。 SignTx方法需要EIP155签名器(EIP155 signer)，这需要我们从客户端拿到链ID
-	chainID, err := rinkbyClient.NetworkID(context.Background())
+	chainID, err := ropstenClient.NetworkID(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -94,7 +94,7 @@ func txToken(to, amount string) {
 	}
 
 	//广播交易
-	err = rinkbyClient.SendTransaction(context.Background(), signedTx)
+	err = ropstenClient.SendTransaction(context.Background(), signedTx)
 	if err != nil {
 		log.Fatal(err)
 	}

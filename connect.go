@@ -57,6 +57,23 @@ func connectRinkbyEthScan() *etherscan.Client {
 	return tokenEthScan
 }
 
+func connectRopstenClient() *ethclient.Client {
+	client, err := ethclient.Dial("https://ropsten.infura.io")
+	if err != nil{
+		log.Fatal(err)
+	}
+
+	_ = client //??
+	return client
+}
+
+func connectRopstenEthScan() *etherscan.Client {
+	//// create a API client for specified ethereum net
+	tokenEthScan := etherscan.New(etherscan.Ropsten, "W8M6B92HBM7CUAQINJ8IMST29RY2ZVSQH4")
+
+	return tokenEthScan
+}
+
 func connectEthScan() *etherscan.Client {
 	tokenEthScan := etherscan.New(etherscan.Mainnet, "W8M6B92HBM7CUAQINJ8IMST29RY2ZVSQH4")
 
@@ -67,11 +84,11 @@ func getKeys() (*ecdsa.PrivateKey, *ecdsa.PublicKey, common.Address) {
 	//加载的私钥
 	// 获取私钥方式一，通过keystore文件
 
-	fromKeystore,err := ioutil.ReadFile("/home/shiun/.ethereum/rinkeby/keystore/UTC--2018-12-04T12-10-18.166247692Z--79e9ad2b2cdc815de93a02ec48c94f88a27fce86")
+	fromKeystore,err := ioutil.ReadFile("/home/shiun/.ethereum/testnet/keystore/UTC--2018-11-21T22-08-22.991819776Z--18d9052e5191527d1dfab77dc6fa108c62d8f232")
 	if err != nil{
 		log.Fatal(err)
 	}
-	fromKey, err := keystore.DecryptKey(fromKeystore,"MXCtest00")
+	fromKey, err := keystore.DecryptKey(fromKeystore,"mxc01")
 	if err != nil {
 		log.Fatal(err)
 	}

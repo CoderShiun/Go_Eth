@@ -11,11 +11,11 @@ import (
 )
 
 func getPriKeyFromKeystore() (*ecdsa.PrivateKey, *ecdsa.PublicKey, common.Address){
-	fromKeystore,err := ioutil.ReadFile("/home/shiun/.ethereum/rinkeby/keystore/UTC--2019-01-17T15-05-49.414272439Z--9f8cfcab0f63a06c455c848cc617912a35e8806e")
+	fromKeystore,err := ioutil.ReadFile("/home/shiun/.ethereum/testnet/keystore/UTC--2018-11-21T22-08-22.991819776Z--18d9052e5191527d1dfab77dc6fa108c62d8f232")
 	if err != nil{
 		log.Fatal(err)
 	}
-	fromKey, err := keystore.DecryptKey(fromKeystore,"mxctest00")
+	fromKey, err := keystore.DecryptKey(fromKeystore,"mxc01")
 	if err != nil {
 		log.Fatal(err)
 	}
