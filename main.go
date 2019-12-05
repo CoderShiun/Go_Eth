@@ -1,7 +1,11 @@
 package main
 
 var client = connectClient()
+var ethScan = connectEthScan()
 var rinkbyClient = connectRinkbyClient()
+var rinkbyEthScan = connectRinkbyEthScan()
+var ropstenClient = connectRopstenClient()
+var ropstenEthScan = connectRopstenEthScan()
 
 type rinkby struct {
 	ContractAddress string
@@ -13,6 +17,10 @@ var(
 	rink_contractAddress = "0xD4b4AE9EB383F194fc7b8c428a4c47D36A6d2540"
 	rink_from = "0x79e9AD2b2cDC815dE93a02EC48c94F88a27FCE86"
 	rink_to = "0x9f8CFcAb0f63A06c455C848Cc617912a35e8806E"
+)
+
+var(
+	ETH_contractAddress = ""
 )
 
 func main() {
@@ -43,5 +51,15 @@ func main() {
 
 	//checkTokenInternalTx("0x79e9AD2b2cDC815dE93a02EC48c94F88a27FCE86")
 
+<<<<<<< HEAD
 	createKeys()
+=======
+	//txETH("0x9f8CFcAb0f63A06c455C848Cc617912a35e8806E","0.12")
+
+	txToken("0x63dF6a06D4a9e20199C6Be3eE9cac591b7d5D01F","121")
+
+	//getPriKeyFromKeystore()
+
+	//checkTokenTx("0xd0B0e864959d4625577939fC4d45b77aeB04F1d0","0x63dF6a06D4a9e20199C6Be3eE9cac591b7d5D01F")
+>>>>>>> dffb1baf205c822e068609b01bc19012b07c9235
 }

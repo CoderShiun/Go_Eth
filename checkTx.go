@@ -78,9 +78,19 @@ func checkSingleTxByBlockHash() {
 
 func checkTokenTx(contractAddress, address string) {
 	// check ERC20 transactions from/to a specified address
-	transfers, err := rinkbyClient.ERC20Transfers(&contractAddress, &address, nil, nil, 0, 0)
+	//transfers, err := ethScan.ERC20Transfers(&contractAddress, &address, nil, nil, 0, 0)
+	bNo := 0
+	transfers, err := ropstenEthScan.ERC20Transfers(&contractAddress, &address, &bNo, nil, 0, 0)
 	if err != nil {
 		log.Panic(err)
+	}
+
+	for _, tx := range transfers{
+		fmt.Println("Value: ",tx.Value.Int())
+		fmt.Println(tx.BlockNumber)
+		fmt.Println(tx.To)
+		fmt.Println(tx.From)
+		fmt.Println(tx.TokenName)
 	}
 
 	fmt.Println(transfers)
@@ -90,7 +100,7 @@ func checkTokenTx(contractAddress, address string) {
 check if the tx is failed
  */
 func checkTokenInternalTx(address string){
-	internalTx, err := rinkbyClient.InternalTxByAddress(address, nil,nil, 1, 100, true)
+	internalTx, err := ethScan.InternalTxByAddress(address, nil,nil, 1, 100, true)
 	if err != nil {
 		log.Panic(err)
 	}
