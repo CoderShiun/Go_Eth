@@ -43,4 +43,5 @@ func main() {
 
 	//checkTokenInternalTx("0x79e9AD2b2cDC815dE93a02EC48c94F88a27FCE86")
 
+	createKeys()
 }

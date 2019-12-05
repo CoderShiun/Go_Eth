@@ -10,7 +10,7 @@ import (
 
 func createKeys() {
 	//the key will store in the path below
-	ks := keystore.NewKeyStore("/home/shiun/Ethereum/Pri_Air00/keystore", keystore.StandardScryptN, keystore.StandardScryptP)
+	ks := keystore.NewKeyStore("/home/shiun/Download", keystore.StandardScryptN, keystore.StandardScryptP)
 	password := "default"
 	account, err := ks.NewAccount(password)
 	if err != nil {
